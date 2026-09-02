@@ -5,22 +5,13 @@ import styles from './GuitarForm.module.css'
 const BODY_TYPES = ['Electric', 'Acoustic', 'Bass', 'Classical']
 const USER_ROLES = ['Merchant', 'Consumer']
 
-const emptyForm = {
-  model: '',
-  bodyType: '',
-  brand: '',
-  stock: '',
-  manufacturer: '',
-  userRole: '',
-}
-
-function validateGuitar(values) {
+function validateForm(values) {
   const errors = {}
 
   if (!values.model.trim()) {
-    errors.model = 'Brand Name is required.'
+    errors.model = 'Guitar model is required.'
   } else if (values.model.trim().length < 3) {
-    errors.model = 'Item name must be at least 3 characters.'
+    errors.model = 'Guitar model must be at least 3 characters.'
   }
 
   if (!BODY_TYPES.includes(values.bodyType)) {
@@ -33,15 +24,10 @@ function validateGuitar(values) {
     errors.brand = 'Brand/Artist must be at least 3 characters.'
   }
 
-  if (values.stock === '' || values.stock === null || values.stock === undefined) {
+  if (values.stock === '') {
     errors.stock = 'Stock quantity is required.'
-  } else {
-    const stockNum = Number(values.stock)
-    if (!Number.isInteger(stockNum)) {
-      errors.stock = 'Stock quantity must be a whole number.'
-    } else if (stockNum < 1 || stockNum > 100) {
-      errors.stock = 'Stock quantity must be between 1 and 100.'
-    }
+  } else if (Number(values.stock) < 1 || Number(values.stock) > 100) {
+    errors.stock = 'Stock quantity must be between 1 and 100.'
   }
 
   if (!values.manufacturer.trim()) {
@@ -58,114 +44,125 @@ function validateGuitar(values) {
 }
 
 export default function GuitarForm({ onSubmit }) {
-  const [values, setValues] = useState(emptyForm)
+  const [model, setModel] = useState('')
+  const [bodyType, setBodyType] = useState('')
+  const [brand, setBrand] = useState('')
+  const [stock, setStock] = useState('')
+  const [manufacturer, setManufacturer] = useState('')
+  const [userRole, setUserRole] = useState('')
   const [errors, setErrors] = useState({})
-  const [touched, setTouched] = useState({})
 
-  function handleChange(field, value) {
-    const nextValues = { ...values, [field]: value }
-    setValues(nextValues)
-    setTouched((prev) => ({ ...prev, [field]: true }))
-    setErrors(validateGuitar(nextValues))
+  function handleModelChange(e) {
+    const value = e.target.value
+    setModel(value)
+    setErrors(validateForm({ model: value, bodyType, brand, stock, manufacturer, userRole }))
+  }
+
+  function handleBodyTypeChange(e) {
+    const value = e.target.value
+    setBodyType(value)
+    setErrors(validateForm({ model, bodyType: value, brand, stock, manufacturer, userRole }))
+  }
+
+  function handleBrandChange(e) {
+    const value = e.target.value
+    setBrand(value)
+    setErrors(validateForm({ model, bodyType, brand: value, stock, manufacturer, userRole }))
+  }
+
+  function handleStockChange(e) {
+    const value = e.target.value
+    setStock(value)
+    setErrors(validateForm({ model, bodyType, brand, stock: value, manufacturer, userRole }))
+  }
+
+  function handleManufacturerChange(e) {
+    const value = e.target.value
+    setManufacturer(value)
+    setErrors(validateForm({ model, bodyType, brand, stock, manufacturer: value, userRole }))
+  }
+
+  function handleUserRoleChange(e) {
+    const value = e.target.value
+    setUserRole(value)
+    setErrors(validateForm({ model, bodyType, brand, stock, manufacturer, userRole: value }))
   }
 
   function handleSubmit(e) {
     e.preventDefault()
-    const validationErrors = validateGuitar(values)
+
+    const values = { model, bodyType, brand, stock, manufacturer, userRole }
+    const validationErrors = validateForm(values)
     setErrors(validationErrors)
-    setTouched({
-      model: true,
-      bodyType: true,
-      brand: true,
-      stock: true,
-      manufacturer: true,
-      userRole: true,
-    })
 
     if (Object.keys(validationErrors).length > 0) return
 
     onSubmit({
-      ...values,
-      model: values.model.trim(),
-      brand: values.brand.trim(),
-      manufacturer: values.manufacturer.trim(),
-      stock: Number(values.stock),
+      model: model.trim(),
+      bodyType,
+      brand: brand.trim(),
+      stock: Number(stock),
+      manufacturer: manufacturer.trim(),
+      userRole,
     })
 
-    setValues(emptyForm)
-    setTouched({})
+    setModel('')
+    setBodyType('')
+    setBrand('')
+    setStock('')
+    setManufacturer('')
+    setUserRole('')
     setErrors({})
   }
-
-  const showError = (field) => touched[field] && errors[field]
 
   return (
     <form onSubmit={handleSubmit} className={shared.card} noValidate>
       <h2 className={shared.cardTitle}>Register New Item</h2>
 
       <div className={styles.formGrid}>
-        <div className={`${styles.field} ${showError('model') ? styles.fieldInvalid : ''}`}>
+        <div className={`${styles.field} ${errors.model ? styles.fieldInvalid : ''}`}>
           <label htmlFor="model">Guitar Model</label>
-          <input
-            id="model"
-            type="text"
-            value={values.model}
-            onChange={(e) => handleChange('model', e.target.value)}
-          />
-          {showError('model') && <p className={styles.fieldError}>{errors.model}</p>}
+          <input id="model" type="text" value={model} onChange={handleModelChange} />
+          {errors.model && <p className={styles.fieldError}>{errors.model}</p>}
         </div>
 
-        <div className={`${styles.field} ${showError('bodyType') ? styles.fieldInvalid : ''}`}>
+        <div className={`${styles.field} ${errors.bodyType ? styles.fieldInvalid : ''}`}>
           <label htmlFor="bodyType">Sub-category / Genre</label>
-          <select
-            id="bodyType"
-            value={values.bodyType}
-            onChange={(e) => handleChange('bodyType', e.target.value)}
-          >
+          <select id="bodyType" value={bodyType} onChange={handleBodyTypeChange}>
             <option value="">Select sub-category</option>
             {BODY_TYPES.map((type) => (
               <option key={type} value={type}>{type}</option>
             ))}
           </select>
-          {showError('bodyType') && <p className={styles.fieldError}>{errors.bodyType}</p>}
+          {errors.bodyType && <p className={styles.fieldError}>{errors.bodyType}</p>}
         </div>
 
-        <div className={`${styles.field} ${showError('brand') ? styles.fieldInvalid : ''}`}>
+        <div className={`${styles.field} ${errors.brand ? styles.fieldInvalid : ''}`}>
           <label htmlFor="brand">Brand / Artist</label>
-          <input
-            id="brand"
-            type="text"
-            value={values.brand}
-            onChange={(e) => handleChange('brand', e.target.value)}
-          />
-          {showError('brand') && <p className={styles.fieldError}>{errors.brand}</p>}
+          <input id="brand" type="text" value={brand} onChange={handleBrandChange} />
+          {errors.brand && <p className={styles.fieldError}>{errors.brand}</p>}
         </div>
 
-        <div className={`${styles.field} ${showError('stock') ? styles.fieldInvalid : ''}`}>
+        <div className={`${styles.field} ${errors.stock ? styles.fieldInvalid : ''}`}>
           <label htmlFor="stock">Stock Quantity (1-100)</label>
           <input
             id="stock"
             type="number"
             min="1"
             max="100"
-            value={values.stock}
-            onChange={(e) => handleChange('stock', e.target.value)}
+            value={stock}
+            onChange={handleStockChange}
           />
-          {showError('stock') && <p className={styles.fieldError}>{errors.stock}</p>}
+          {errors.stock && <p className={styles.fieldError}>{errors.stock}</p>}
         </div>
 
-        <div className={`${styles.field} ${styles.fieldSpan2} ${showError('manufacturer') ? styles.fieldInvalid : ''}`}>
+        <div className={`${styles.field} ${styles.fieldSpan2} ${errors.manufacturer ? styles.fieldInvalid : ''}`}>
           <label htmlFor="manufacturer">Label / Company Name</label>
-          <input
-            id="manufacturer"
-            type="text"
-            value={values.manufacturer}
-            onChange={(e) => handleChange('manufacturer', e.target.value)}
-          />
-          {showError('manufacturer') && <p className={styles.fieldError}>{errors.manufacturer}</p>}
+          <input id="manufacturer" type="text" value={manufacturer} onChange={handleManufacturerChange} />
+          {errors.manufacturer && <p className={styles.fieldError}>{errors.manufacturer}</p>}
         </div>
 
-        <div className={`${styles.field} ${styles.fieldSpan2} ${showError('userRole') ? styles.fieldInvalid : ''}`}>
+        <div className={`${styles.field} ${styles.fieldSpan2} ${errors.userRole ? styles.fieldInvalid : ''}`}>
           <span className={styles.radioLabel}>User Role</span>
           <div className={styles.radioGroup}>
             {USER_ROLES.map((role) => (
@@ -174,14 +171,14 @@ export default function GuitarForm({ onSubmit }) {
                   type="radio"
                   name="userRole"
                   value={role}
-                  checked={values.userRole === role}
-                  onChange={(e) => handleChange('userRole', e.target.value)}
+                  checked={userRole === role}
+                  onChange={handleUserRoleChange}
                 />
                 {role}
               </label>
             ))}
           </div>
-          {showError('userRole') && <p className={styles.fieldError}>{errors.userRole}</p>}
+          {errors.userRole && <p className={styles.fieldError}>{errors.userRole}</p>}
         </div>
       </div>
 
