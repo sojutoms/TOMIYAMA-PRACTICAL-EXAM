@@ -1,0 +1,15 @@
+.appShell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+.appHeader h1 {
+  margin: 0 0 4px;
+  font-size: 28px;
+}
+
+.appHeader p {
+  margin: 0 0 20px;
+  color: var(--color-text-muted);
+}

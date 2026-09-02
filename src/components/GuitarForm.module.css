@@ -1,0 +1,77 @@
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldSpan2 {
+  grid-column: span 2;
+}
+
+.field label,
+.field .radioLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.field input[type='text'],
+.field input[type='number'],
+.field select {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 9px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.fieldInvalid input,
+.fieldInvalid select {
+  border-color: var(--color-danger);
+}
+
+.fieldError {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-danger);
+}
+
+.radioGroup {
+  display: flex;
+  gap: 18px;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fieldSpan2 {
+    grid-column: span 1;
+  }
+}
