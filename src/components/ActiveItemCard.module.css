@@ -1,0 +1,44 @@
+.detailCard {
+  position: sticky;
+  top: 20px;
+}
+
+.detailEmpty {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.detailList {
+  margin: 0;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+}
+
+.detailRow dt {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.detailRow dd {
+  margin: 0;
+  font-size: 14px;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .detailCard {
+    position: static;
+  }
+}

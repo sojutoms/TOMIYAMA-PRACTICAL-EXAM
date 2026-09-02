@@ -40,3 +40,16 @@
   color: #0ea5e9;
   border-bottom-color: #0ea5e9;
 }
+
+.registryLayout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .registryLayout {
+    grid-template-columns: 1fr;
+  }
+}

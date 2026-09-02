@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import GuitarForm from './components/GuitarForm'
 import RegistryTable from './components/RegistryTable'
+import ActiveItemCard from './components/ActiveItemCard'
 import styles from './App.module.css'
 
 const BODY_TYPES = ['Electric', 'Acoustic', 'Bass', 'Classical']
@@ -69,11 +70,14 @@ function App() {
         {view === 'form' && <GuitarForm onSubmit={handleRegister} />}
 
         {view === 'registry' && (
-          <RegistryTable
-            guitars={guitars}
-            selectedId={selectedId}
-            onSelectRow={setSelectedId}
-          />
+          <div className={styles.registryLayout}>
+            <RegistryTable
+              guitars={guitars}
+              selectedId={selectedId}
+              onSelectRow={setSelectedId}
+            />
+            <ActiveItemCard guitars={guitars} selectedId={selectedId} />
+          </div>
         )}
       </main>
     </div>
