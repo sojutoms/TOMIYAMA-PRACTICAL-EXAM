@@ -28,3 +28,41 @@
 .btnPrimary:hover {
   background: #0284c7;
 }
+
+.btnSecondary {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: var(--color-bg);
+}
+
+.btnSecondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badgeMerchant {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.badgeConsumer {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.badgeUnknown {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+}

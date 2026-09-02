@@ -1,0 +1,97 @@
+.tableToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.toolbarControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.toolbarControl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.toolbarControl select {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 13px;
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table thead th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table tbody tr {
+  cursor: pointer;
+}
+
+.table tbody tr:hover {
+  background: var(--color-bg);
+}
+
+.rowSelected {
+  background: rgba(181, 84, 31, 0.08);
+}
+
+.rowSelected:hover {
+  background: rgba(181, 84, 31, 0.12);
+}
+
+.emptyCell {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 24px;
+}
+
+.tablePagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.paginationControls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.paginationControls button {
+  padding: 7px 14px;
+}
