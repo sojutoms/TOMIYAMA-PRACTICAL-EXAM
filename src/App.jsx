@@ -4,26 +4,11 @@ import RegistryTable from './components/RegistryTable'
 import ActiveItemCard from './components/ActiveItemCard'
 import styles from './App.module.css'
 
-const BODY_TYPES = ['Electric', 'Acoustic', 'Bass', 'Classical']
-const USER_ROLES = ['Merchant', 'Consumer']
 const STORAGE_KEY = 'guitar-store-registry-v2'
 
-function normalizeGuitar(guitar) {
-  return {
-    ...guitar,
-    bodyType: BODY_TYPES.includes(guitar.bodyType) ? guitar.bodyType : BODY_TYPES[0],
-    userRole: USER_ROLES.includes(guitar.userRole) ? guitar.userRole : USER_ROLES[0],
-  }
-}
-
 function loadInitialGuitars() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    const parsed = stored ? JSON.parse(stored) : []
-    return Array.isArray(parsed) ? parsed.map(normalizeGuitar) : []
-  } catch {
-    return []
-  }
+  const stored = localStorage.getItem(STORAGE_KEY)
+  return stored ? JSON.parse(stored) : []
 }
 
 function App() {
@@ -36,10 +21,8 @@ function App() {
   }, [guitars])
 
   function handleRegister(values) {
-    setGuitars((prev) => {
-      const nextId = prev.length ? Math.max(...prev.map((g) => g.id)) + 1 : 1
-      return [...prev, { id: nextId, ...values }]
-    })
+    const newGuitar = { id: guitars.length + 1, ...values }
+    setGuitars([...guitars, newGuitar])
     setView('registry')
   }
 

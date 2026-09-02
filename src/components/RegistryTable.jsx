@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import {
   createColumnHelper,
   flexRender,
@@ -22,8 +22,8 @@ const columns = [
   columnHelper.accessor('userRole', {
     header: 'User Role',
     cell: (info) => {
-      const role = info.getValue() ?? 'Unknown'
-      const badgeClass = shared[`badge${role}`] ?? shared.badgeUnknown
+      const role = info.getValue()
+      const badgeClass = role === 'Merchant' ? shared.badgeMerchant : shared.badgeConsumer
       return <span className={`${shared.badge} ${badgeClass}`}>{role}</span>
     },
   }),
@@ -33,10 +33,9 @@ export default function RegistryTable({ guitars, selectedId, onSelectRow }) {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 })
   const [filterBodyType, setFilterBodyType] = useState('')
 
-  const filteredGuitars = useMemo(() => {
-    if (!filterBodyType) return guitars
-    return guitars.filter((g) => g.bodyType === filterBodyType)
-  }, [guitars, filterBodyType])
+  const filteredGuitars = filterBodyType
+    ? guitars.filter((g) => g.bodyType === filterBodyType)
+    : guitars
 
   const table = useReactTable({
     data: filteredGuitars,

@@ -61,8 +61,3 @@
   background: var(--color-success-bg);
   color: var(--color-success-text);
 }
-
-.badgeUnknown {
-  background: var(--color-bg);
-  color: var(--color-text-muted);
-}

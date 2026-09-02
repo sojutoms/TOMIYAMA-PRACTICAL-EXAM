@@ -4,7 +4,6 @@ import styles from './ActiveItemCard.module.css'
 
 export default function ActiveItemCard({ guitars, selectedId }) {
   const [activeItem, setActiveItem] = useState(null)
-  const [isSyncing, setIsSyncing] = useState(false)
 
   useEffect(() => {
     if (selectedId == null) {
@@ -12,32 +11,19 @@ export default function ActiveItemCard({ guitars, selectedId }) {
       return
     }
 
-    setIsSyncing(true)
-    const timer = setTimeout(() => {
-      const found = guitars.find((g) => g.id === selectedId) ?? null
-      setActiveItem(found)
-      setIsSyncing(false)
-    }, 150)
-
-    return () => clearTimeout(timer)
+    const found = guitars.find((g) => g.id === selectedId)
+    setActiveItem(found)
   }, [selectedId, guitars])
-
-  const role = activeItem?.userRole ?? 'Unknown'
-  const badgeClass = shared[`badge${role}`] ?? shared.badgeUnknown
 
   return (
     <div className={`${shared.card} ${styles.detailCard}`}>
       <h2 className={shared.cardTitle}>Active Item Profile</h2>
 
-      {!selectedId && (
+      {!activeItem && (
         <p className={styles.detailEmpty}>Select a row in the Registry Table to view its full profile.</p>
       )}
 
-      {selectedId && isSyncing && (
-        <p className={styles.detailEmpty}>Syncing selection&hellip;</p>
-      )}
-
-      {selectedId && !isSyncing && activeItem && (
+      {activeItem && (
         <dl className={styles.detailList}>
           <div className={styles.detailRow}>
             <dt>Item Name</dt>
@@ -62,7 +48,9 @@ export default function ActiveItemCard({ guitars, selectedId }) {
           <div className={styles.detailRow}>
             <dt>User Role</dt>
             <dd>
-              <span className={`${shared.badge} ${badgeClass}`}>{role}</span>
+              <span className={`${shared.badge} ${activeItem.userRole === 'Merchant' ? shared.badgeMerchant : shared.badgeConsumer}`}>
+                {activeItem.userRole}
+              </span>
             </dd>
           </div>
         </dl>
