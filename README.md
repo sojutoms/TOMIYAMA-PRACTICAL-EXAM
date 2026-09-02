@@ -1,26 +1,19 @@
-# Guitar Store Inventory Manager
+# React + Vite
 
-A single-page React (Vite) app for registering and managing guitar store inventory.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- **Register Item** — form with real-time validation for Guitar Model, Sub-category/Genre, Brand/Artist, Stock Quantity (1-100), Label/Company Name, and User Role.
-- **Registry Table** — TanStack Table with pagination (5 rows/page), sub-category filtering, and row selection.
-- **Active Item Profile** — detail card that syncs with the selected table row and shows a User Role badge.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-Styling is done with CSS Modules. Data is kept in React state and persisted to `localStorage` — the registry starts empty and is populated only by items you register through the form.
+## React Compiler
 
-## Getting started
+The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
 
-```bash
-npm install
-npm run dev
-```
+Note: This will impact Vite dev & build performances.
+You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
 
-## Deployment
+## Expanding the ESLint configuration
 
-This project deploys to [Vercel](https://vercel.com) with zero extra configuration:
-
-1. Import this repository into Vercel.
-2. Framework preset: **Vite** (auto-detected).
-3. Build command: `npm run build` · Output directory: `dist`.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
